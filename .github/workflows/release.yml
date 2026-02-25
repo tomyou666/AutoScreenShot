@@ -1,0 +1,43 @@
+name: Release
+
+on:
+  push:
+    tags:
+      - 'v*'
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Go
+        uses: actions/setup-go@v5
+        with:
+          go-version: '1.22'
+
+      # マニフェストを exe に埋め込む（Common Controls v6 用・README 方法 A）
+      - name: Install rsrc and generate Windows resource
+        run: |
+          go install github.com/akavel/rsrc@latest
+          rsrc -manifest app.manifest -o rsrc.syso
+
+      - name: Build for Windows (amd64)
+        run: |
+          GOOS=windows GOARCH=amd64 go build -ldflags="-H windowsgui" -o atcs-windows-amd64.exe .
+
+      - name: Build for Windows (arm64)
+        run: |
+          GOOS=windows GOARCH=arm64 go build -ldflags="-H windowsgui" -o atcs-windows-arm64.exe .
+
+      - name: Create Release
+        uses: softprops/action-gh-release@v2
+        with:
+          files: |
+            atcs-windows-amd64.exe
+            atcs-windows-arm64.exe
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
