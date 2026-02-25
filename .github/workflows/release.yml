@@ -20,10 +20,12 @@ jobs:
           go-version: '1.22'
 
       # マニフェストを exe に埋め込む（Common Controls v6 用・README 方法 A）
-      - name: Install rsrc and generate Windows resource
+      # アーキテクチャ別 .syso を生成（同一ファイルを amd64/arm64 で共有すると ARM64 で relocation エラーになる）
+      - name: Install rsrc and generate Windows resources
         run: |
           go install github.com/akavel/rsrc@latest
-          rsrc -manifest app.manifest -o rsrc.syso
+          rsrc -manifest app.manifest -arch amd64 -o rsrc_windows_amd64.syso
+          rsrc -manifest app.manifest -arch arm64 -o rsrc_windows_arm64.syso
 
       - name: Build for Windows (amd64)
         run: |
