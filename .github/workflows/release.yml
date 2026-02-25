@@ -29,17 +29,17 @@ jobs:
 
       - name: Build for Windows (amd64)
         run: |
-          GOOS=windows GOARCH=amd64 go build -ldflags="-H windowsgui" -o atcs-windows-amd64.exe .
+          GOOS=windows GOARCH=amd64 go build -ldflags="-H windowsgui" -o AutoScreenShot-windows-amd64.exe .
 
       - name: Build for Windows (arm64)
         run: |
-          GOOS=windows GOARCH=arm64 go build -ldflags="-H windowsgui" -o atcs-windows-arm64.exe .
+          GOOS=windows GOARCH=arm64 go build -ldflags="-H windowsgui" -o AutoScreenShot-windows-arm64.exe .
 
       - name: Create Release
         uses: softprops/action-gh-release@v2
         with:
           files: |
-            atcs-windows-amd64.exe
-            atcs-windows-arm64.exe
+            AutoScreenShot-windows-amd64.exe
+            AutoScreenShot-windows-arm64.exe
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

@@ -47,8 +47,8 @@ Windows 向けの自動スクリーンショットアプリ（Go 製）です。
    git push origin v1.0.0
    ```
 3. GitHub の Actionsでワークフローが走り、完了後に [Releases](https://github.com/tomyou666/AutoScreenShot/releases) に以下がアップロードされます:
-   - `atcs-windows-amd64.exe`（64bit Intel/AMD）
-   - `atcs-windows-arm64.exe`（64bit ARM）
+   - `AutoScreenShot-windows-amd64.exe`（64bit Intel/AMD）
+   - `AutoScreenShot-windows-arm64.exe`（64bit ARM）
 
 既存のタグを付け直したい場合は `git tag -d v1.0.0` で削除してから再度タグを打ち、`git push origin v1.0.0` で push してください。
 
