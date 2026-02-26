@@ -12,6 +12,10 @@ import (
 // walk の Key.String() は "Return" を返すが、設定例は "Enter" のため統一する。
 var keyDisplayNames = map[string]string{
 	"Return": "Enter",
+	"Right":  "ArrowRight",
+	"Left":   "ArrowLeft",
+	"Up":     "ArrowUp",
+	"Down":   "ArrowDown",
 }
 
 // keyOperationString は、現在押されている修飾キーと押されたキーから
