@@ -8,6 +8,7 @@ import (
 	"path/filepath"
 	"runtime"
 	"strings"
+	"syscall"
 	"time"
 
 	"AutoScreenShot/capture"
@@ -18,9 +19,21 @@ import (
 	"AutoScreenShot/ui"
 )
 
+var (
+	user32                 = syscall.NewLazyDLL("user32.dll")
+	procSetProcessDPIAware = user32.NewProc("SetProcessDPIAware")
+)
+
+func enableDPIAwareness() {
+	_, _, _ = procSetProcessDPIAware.Call()
+}
+
 func main() {
 	// Windows GUI はメインスレッドで実行する必要がある
 	runtime.LockOSThread()
+
+	// 高 DPI 環境で座標ずれが起きないよう、プロセスを DPI 対応にする
+	enableDPIAwareness()
 
 	settings, ok := ui.RunSettingsDialog()
 	if !ok {

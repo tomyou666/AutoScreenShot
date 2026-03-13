@@ -173,7 +173,9 @@ func virtualScreenBounds() (x, y, width, height int) {
 			maxY = b.Max.Y
 		}
 	}
-	return minX, minY, maxX - minX, maxY - minY
+	x, y = minX, minY
+	width, height = maxX-minX, maxY-minY
+	return
 }
 
 var (
